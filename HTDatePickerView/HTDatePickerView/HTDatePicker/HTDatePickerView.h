@@ -53,11 +53,11 @@ typedef void(^ensureBlock)(NSString *date);
  */
 @property(nonatomic, strong)UIFont *buttonTitleFont;
 /**
- *   取消按钮回调
+ *   取消按钮回调 注意循环引用需要weakSelf
  */
 @property(nonatomic, copy)cancelBlock cancelBlock;
 /**
- *   确定按钮回调
+ *   确定按钮回调 注意循环引用需要weakSelf
  */
 @property(nonatomic, copy)ensureBlock ensureBlock;
 /**

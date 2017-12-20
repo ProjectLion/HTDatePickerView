@@ -71,6 +71,7 @@
     if (self) {
         self.pickerStyle = style;
         self.isCanSelectCurrentTimeBefore = NO;
+        [self configData];
         [self creatView];
         
     }
@@ -174,10 +175,6 @@
     for (int i = 0; i < 60; i ++) {
         NSString *num = [NSString stringWithFormat:@"%02d",i];
         [_minuteArray addObject:num];
-    }
-    
-    for (int i = 0; i < 60; i ++) {
-        NSString *num = [NSString stringWithFormat:@"%02d",i];
         [_secondArray addObject:num];
     }
     
@@ -341,7 +338,8 @@
     }
 }
 
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{    UILabel *customLabel = (UILabel *)view;
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    UILabel *customLabel = (UILabel *)view;
     if (!customLabel) {
         customLabel = [[UILabel alloc] init];
         customLabel.textAlignment = NSTextAlignmentCenter;
@@ -374,7 +372,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     NSDate *date = [NSDate date];
-    if (_isCanSelectCurrentTimeBefore) {   //如果不能选择当天之前的时间
+    if (_isCanSelectCurrentTimeBefore) {   //如果能选择当天之前的时间
         switch (component) {
             case 0:
                 yearIndex = row;
@@ -395,7 +393,7 @@
                 secondIndex = row;
                 break;
         }
-    }else{    //如果能选择当天之前的时间
+    }else{    //如果不能选择当天之前的时间
         if (component == 0) {
             if (![self isLaterThanCurrentTimeWithYear:_yearArray[row] mouth:_monthArray[monthIndex] day:_dayArray[dayIndex] hour:_hourArray[hourIndex] minute:_minuteArray[minuteIndex] second:_secondArray[secondIndex]]) {
                 [self getNowDate:nil animated:YES];
@@ -456,41 +454,39 @@
     
     [pickerView reloadAllComponents];
     
-    NSString *dateStr = @"";
     switch (_pickerStyle) {
         case HTDatePickerStyle_Y:{
-            dateStr = [NSString stringWithFormat:@"%@",_yearArray[yearIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy"];
+            _returnDateStr = [NSString stringWithFormat:@"%@",_yearArray[yearIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy"];
         }
             break;
         case HTDatePickerStyle_YM:{
-            dateStr = [NSString stringWithFormat:@"%@-%@",_yearArray[yearIndex],_monthArray[monthIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy-MM"];
+            _returnDateStr = [NSString stringWithFormat:@"%@-%@",_yearArray[yearIndex],_monthArray[monthIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy-MM"];
         }
             break;
         case HTDatePickerStyle_YMD:{
-            dateStr = [NSString stringWithFormat:@"%@-%@-%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy-MM-dd"];
+            _returnDateStr = [NSString stringWithFormat:@"%@-%@-%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy-MM-dd"];
         }
             break;
         case HTDatePickerStyle_YMDh:{
-            dateStr = [NSString stringWithFormat:@"%@-%@-%@ %@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy-MM-dd HH"];
+            _returnDateStr = [NSString stringWithFormat:@"%@-%@-%@ %@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy-MM-dd HH"];
         }
             break;
         case HTDatePickerStyle_YMDhm:{
-            dateStr = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex],_minuteArray[minuteIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy-MM-dd HH:mm"];
+            _returnDateStr = [NSString stringWithFormat:@"%@-%@-%@ %@:%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex],_minuteArray[minuteIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy-MM-dd HH:mm"];
         }
             break;
         default:{
-            dateStr = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex],_minuteArray[minuteIndex],_secondArray[secondIndex]];
-            self.scrollToDate = [NSDate date:dateStr WithFormat:@"yyyy-MM-dd HH:mm:ss"];
+            _returnDateStr = [NSString stringWithFormat:@"%@-%@-%@ %@:%@:%@",_yearArray[yearIndex],_monthArray[monthIndex],_dayArray[dayIndex],_hourArray[hourIndex],_minuteArray[minuteIndex],_secondArray[secondIndex]];
+            self.scrollToDate = [NSDate date:_returnDateStr WithFormat:@"yyyy-MM-dd HH:mm:ss"];
         }
             break;
     }
     
-    _returnDateStr = dateStr;
     _startDate = self.scrollToDate;
 }
 
@@ -520,7 +516,7 @@
  *
  */
 - (void)showDatePicker{
-    [self configData];
+    
     [self getNowDate:nil animated:YES];
     [UIView animateWithDuration:0.35 animations:^{
         self.frame = CGRectMake(0, SCREENHEIGHT - SELFHEIGHT, SCREENWIDTH, SELFHEIGHT);
