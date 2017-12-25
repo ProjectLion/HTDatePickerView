@@ -17,6 +17,7 @@ typedef enum :NSUInteger{
     HTDatePickerStyle_YMDh,         //年月日时
     HTDatePickerStyle_YMDhm,        //年月日时分
     HTDatePickerStyle_YMDhms,       //年月日时分秒
+    HTDatePickerStyle_hms           //时分秒
 }HTDatePickerStyle;
 /**
  *   取消按钮回调
@@ -114,7 +115,7 @@ typedef void(^ensureBlock)(NSString *date);
 // Short string utilities
 - (NSString *) stringWithDateStyle: (NSDateFormatterStyle) dateStyle timeStyle: (NSDateFormatterStyle) timeStyle;
 - (NSString *) stringWithFormat: (NSString *) format;
-@property (nonatomic, readonly) NSString *shortString;
+//@property (nonatomic, readonly) NSString *shortString;
 @property (nonatomic, readonly) NSString *shortDateString;
 @property (nonatomic, readonly) NSString *shortTimeString;
 @property (nonatomic, readonly) NSString *mediumString;
