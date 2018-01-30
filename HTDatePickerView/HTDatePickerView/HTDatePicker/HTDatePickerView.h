@@ -46,9 +46,17 @@ typedef void(^ensureBlock)(NSString *date);
  */
 @property(nonatomic, assign)BOOL isShowButtonBorder;
 /**
- *   按钮边框颜色 只有isShowButtonBorder = YES时设置有效
+ *   统一设置按钮边框颜色 只有isShowButtonBorder = YES时设置有效
  */
 @property(nonatomic, strong)UIColor *buttonBorderColor;
+/**
+ *   取消按钮按钮边框颜色 只有isShowButtonBorder = YES时设置有效
+ */
+@property(nonatomic, strong)UIColor *cancelBtnBorderColor;
+/**
+ *   确定按钮按钮边框颜色 只有isShowButtonBorder = YES时设置有效
+ */
+@property(nonatomic, strong)UIColor *ensureBtnBorderColor;
 /**
  *   按钮字体颜色  默认为系统14号字体
  */

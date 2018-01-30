@@ -125,6 +125,16 @@
     self.ensureButton.layer.borderColor = _buttonBorderColor.CGColor;
 }
 
+- (void)setCancelBtnBorderColor:(UIColor *)cancelBtnBorderColor{
+    _cancelBtnBorderColor = cancelBtnBorderColor;
+    self.cancelButton.layer.borderColor = _cancelBtnBorderColor.CGColor;
+}
+
+- (void)setEnsureBtnBorderColor:(UIColor *)ensureBtnBorderColor{
+    _ensureBtnBorderColor = ensureBtnBorderColor;
+    self.ensureButton.layer.borderColor = _ensureBtnBorderColor.CGColor;
+}
+
 - (void)setIsCanSelectCurrentTimeBefore:(BOOL)isCanSelectCurrentTimeBefore{
     
     _isCanSelectCurrentTimeBefore = isCanSelectCurrentTimeBefore;
