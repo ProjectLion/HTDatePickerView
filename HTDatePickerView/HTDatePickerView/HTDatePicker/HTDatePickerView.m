@@ -127,11 +127,17 @@
 
 - (void)setCancelBtnBorderColor:(UIColor *)cancelBtnBorderColor{
     _cancelBtnBorderColor = cancelBtnBorderColor;
+    if (_buttonBorderColor) {
+        return;
+    }
     self.cancelButton.layer.borderColor = _cancelBtnBorderColor.CGColor;
 }
 
 - (void)setEnsureBtnBorderColor:(UIColor *)ensureBtnBorderColor{
     _ensureBtnBorderColor = ensureBtnBorderColor;
+    if (_buttonBorderColor) {
+        return;
+    }
     self.ensureButton.layer.borderColor = _ensureBtnBorderColor.CGColor;
 }
 

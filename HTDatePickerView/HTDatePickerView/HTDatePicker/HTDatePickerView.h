@@ -50,11 +50,11 @@ typedef void(^ensureBlock)(NSString *date);
  */
 @property(nonatomic, strong)UIColor *buttonBorderColor;
 /**
- *   取消按钮按钮边框颜色 只有isShowButtonBorder = YES时设置有效
+ *   取消按钮按钮边框颜色(统一设置边框色时无效) 只有isShowButtonBorder = YES时设置有效
  */
 @property(nonatomic, strong)UIColor *cancelBtnBorderColor;
 /**
- *   确定按钮按钮边框颜色 只有isShowButtonBorder = YES时设置有效
+ *   确定按钮按钮边框颜色(统一设置边框色时无效) 只有isShowButtonBorder = YES时设置有效
  */
 @property(nonatomic, strong)UIColor *ensureBtnBorderColor;
 /**
