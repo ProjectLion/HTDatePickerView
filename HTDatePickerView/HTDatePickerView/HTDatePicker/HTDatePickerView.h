@@ -83,7 +83,7 @@ typedef void(^ensureBlock)(NSString *date);
  @param style 风格
  @return self
  */
-- (instancetype)initHtDatePickerViewWithFrame:(CGRect)frame style:(HTDatePickerStyle)style;
+- (instancetype)initHtDatePickerViewWithStyle:(HTDatePickerStyle)style;
 
 /**
  创建时间选择器
@@ -92,7 +92,7 @@ typedef void(^ensureBlock)(NSString *date);
  @param style 风格
  @return self
  */
-+ (instancetype)htDatePickerViewWithFrame:(CGRect)frame style:(HTDatePickerStyle)style;
++ (instancetype)htDatePickerViewWithStyle:(HTDatePickerStyle)style;
 
 @end
 
