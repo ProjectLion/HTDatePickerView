@@ -27,7 +27,9 @@ typedef void(^cancelBlock)(void);
  *   确定按钮回调
  */
 typedef void(^ensureBlock)(NSString *date);
-
+/**
+    选择器的最大年份请到.m文件中设置“MAXYEAR”的值
+ */
 @interface HTDatePickerView : UIView
 /**
  *   时间选择器的风格

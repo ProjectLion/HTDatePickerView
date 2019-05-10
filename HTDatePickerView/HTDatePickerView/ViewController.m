@@ -36,7 +36,7 @@
     timeLabel.text = @"时间";
     [self.view addSubview:timeLabel];
     
-    dataPicker = [HTDatePickerView htDatePickerViewWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width, 260) style:HTDatePickerStyle_YMDhms];
+    dataPicker = [HTDatePickerView htDatePickerViewWithStyle:HTDatePickerStyle_YMDhm];
     dataPicker.cancelBlock = ^{
         NSLog(@"取消");
     };
@@ -47,7 +47,6 @@
     dataPicker.isCanSelectCurrentTimeBefore = YES;
     dataPicker.buttonBorderColor = [UIColor redColor];
     dataPicker.cancelBtnColor = [UIColor redColor];
-    [self.view addSubview:dataPicker];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

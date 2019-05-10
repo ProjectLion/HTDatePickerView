@@ -14,7 +14,7 @@
 #define SELFWIDTH self.frame.size.width
 #define SELFHEIGHT self.frame.size.height
 
-#define MAXYEAR 2051
+#define MAXYEAR 2100
 #define MINYEAR 1970
 #define D_MINUTE 60
 #define D_HOUR 3600
@@ -67,13 +67,12 @@
 //}
 
 - (instancetype)initHtDatePickerViewWithStyle:(HTDatePickerStyle)style{
-    self = [super initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SCREENHEIGHT)];
+    self = [super initWithFrame:CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, 300)];
     if (self) {
         self.pickerStyle = style;
         self.isCanSelectCurrentTimeBefore = NO;
         [self configData];
         [self creatView];
-        
     }
     return self;
 }
@@ -152,21 +151,18 @@
  *
  */
 - (void)creatView{
-    self.backgroundColor = [UIColor clearColor];
-    self.alphaView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT - 250);
+    self.backgroundColor = [UIColor whiteColor];
+    self.alphaView.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
     self.alphaView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideDatePicker)];
     [self.alphaView addGestureRecognizer:tap];
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.alphaView.frame.origin.y + self.alphaView.frame.size.height, SCREENWIDTH, 250)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:bottomView];
-    self.datePickerView.frame = CGRectMake(0, 50, SELFWIDTH, 200);
-    self.datePickerView.backgroundColor = [UIColor whiteColor];
-    self.cancelButton.frame = CGRectMake(20, 10, SELFWIDTH / 5, 30);
-    self.ensureButton.frame = CGRectMake(SELFWIDTH * 4 / 5 - 20, 10, SELFWIDTH / 5, 30);
-    [bottomView addSubview:self.cancelButton];
-    [bottomView addSubview:self.ensureButton];
-    [bottomView addSubview:self.datePickerView];
+    
+    self.cancelButton.frame = CGRectMake(20, 7, SELFWIDTH / 5, 30);
+    self.ensureButton.frame = CGRectMake(SELFWIDTH * 4 / 5 - 20, 7, SELFWIDTH / 5, 30);
+    self.datePickerView.frame = CGRectMake(0, 44, SELFWIDTH, SELFHEIGHT - 44);
+    [self addSubview:self.cancelButton];
+    [self addSubview:self.ensureButton];
+    [self addSubview:self.datePickerView];
 }
 /**
  *
@@ -201,7 +197,7 @@
         [_secondArray addObject:num];
     }
     
-    for (NSInteger i=MINYEAR; i<MAXYEAR; i++) {
+    for (NSInteger i=MINYEAR; i<MAXYEAR+1; i++) {
         NSString *num = [NSString stringWithFormat:@"%ld",(long)i];
         [_yearArray addObject:num];
     }
@@ -631,12 +627,15 @@
 - (void)showDatePicker{
     
     [self getNowDate:nil animated:YES];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.alphaView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
     [UIView animateWithDuration:0.35 animations:^{
-        self.frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT);
+        self.frame = CGRectMake(0, SCREENHEIGHT - SELFHEIGHT, SELFWIDTH, SELFHEIGHT);
     } completion:^(BOOL finished) {
         if (finished) {
-            [self addSubview:self.alphaView];
-            self.alphaView.alpha = 0.4;
+            [UIView animateWithDuration:0.2 animations:^{
+                self.alphaView.alpha = 0.4;
+            }];
         }
     }];
 }
@@ -648,10 +647,11 @@
 - (void)hideDatePicker{
     [UIView animateWithDuration:0.35 animations:^{
         self.alphaView.alpha = 0;
-        self.frame = CGRectMake(0, SCREENHEIGHT, SCREENWIDTH, SELFHEIGHT);
+        self.frame = CGRectMake(0, SCREENHEIGHT, SELFWIDTH, SELFHEIGHT);
     } completion:^(BOOL finished) {
         if (finished) {
             [self.alphaView removeFromSuperview];
+            [self removeFromSuperview];
         }
     }];
 }
